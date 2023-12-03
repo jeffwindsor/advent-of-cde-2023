@@ -13,13 +13,20 @@ def score(s):
     digits = [int(c) for c in s if c.isdigit()]
     return (digits[0] * 10) + digits[-1]
     
-def part1(filename):
-    return sum([score(line) for line in read_input(filename)])
+def part1(inputs):
+    return sum([score(line) for line in inputs])
     
-def part2(filename):
-    return sum([score(word_as_digit(line)) for line in read_input(filename)])
+def part2(inputs):
+    return sum([score(word_as_digit(line)) for line in inputs])
+
+def main():
+    inputs = read_input('./data/01')    
+    example1 = read_input('./data/01_1e')    
+    example2 = read_input('./data/01_2e')    
+    print('Part 1e: ', part1(example1))
+    print('Part 1 : ', part1(inputs))
+    print('Part 2e: ', part2(example2))
+    print('Part 2 : ', part2(inputs))
     
-print('Part 1e: ', part1('./examples/01_1'))
-print('Part 1 : ', part1('./inputs/01'))
-print('Part 2e: ', part2('./examples/01_2'))
-print('Part 2 : ', part2('./inputs/01'))
+if __name__ == "__main__":
+    main()
