@@ -13,7 +13,7 @@ let
 in mkShell {
   packages = [
     python-advent
-    nushell
+    entr
   ];
   
   shellHook = ''
