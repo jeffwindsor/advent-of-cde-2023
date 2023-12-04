@@ -1,8 +1,32 @@
 import parse
 from functools import reduce
 
-cubes = {'red':12, 'blue':14, 'green':13}
+def color_max_counts(ccs):
+	result = {'red':0, 'blue':0, 'green':0}
+	for cc in ccs:
+		for (color,count) in cc:
+			color_count = result[color]
+			if count > result[color]:
+				result[color] = count
+	return result
 
+def is_game_possible(game_result):
+	cubes = {'red':12, 'blue':14, 'green':13}
+	cps = [ game_result[cube_color] <= cube_count 
+			for cube_color, cube_count in cubes.items()]
+	return sum(cps) == 3
+
+def answer1(inputs):
+	return sum([input['id'] 
+	           	for input in inputs 
+	           	if is_game_possible(color_max_counts(input['subsets']))])
+
+def answer2(inputs):
+	def score(color_counts):
+		 return reduce(lambda a,b: a * b, color_counts.values())
+	return sum([score(color_max_counts(input['subsets'])) for input in inputs])	
+
+##################################################################
 def parse_as_int(s):
 	return int(s)
 
@@ -21,27 +45,6 @@ def parse_input(filename):
 	line_parser = parse.compile("Game {id:integer}: {subsets:subsetList}", {"integer": parse_as_int, "subsetList": parse_as_subsets})
 	# parse each line
 	return [ line_parser.parse(line.strip()).named for line in open(filename,'r').readlines() ]
-
-def color_max_counts(ccs):
-	result = {'red':0, 'blue':0, 'green':0}
-	for cc in ccs:
-		for (color,count) in cc:
-			color_count = result[color]
-			if count > result[color]:
-				result[color] = count
-	return result
-
-def is_game_possible(game_result):
-	cps = [game_result[cube_color] <= cube_count for cube_color, cube_count in cubes.items()]
-	return sum(cps) == 3
-
-def answer1(inputs):
-	return sum([input['id'] for input in inputs if is_game_possible(color_max_counts(input['subsets']))])
-
-def answer2(inputs):
-	def score(color_counts):
-		 return reduce(lambda a,b: a * b, color_counts.values())
-	return sum([score(color_max_counts(input['subsets'])) for input in inputs])	
 
 ##################################################################
 def main():
