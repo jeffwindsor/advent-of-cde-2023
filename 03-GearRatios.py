@@ -2,10 +2,6 @@ import re
 from dataclasses import dataclass
 from functools import partial, reduce
 
-
-def read_engine_schematic(filename):
- return [ line.strip() for line in open(filename,'r').readlines() ]
-
 # COORD SHAPE: (row, colStart, colEnd, value)
 def get_pattern(pattern, engine_schematic):
   return [(row, match.start(), match.end(), match.group()) 
@@ -31,7 +27,6 @@ def internal_points(coord):
     
 def number_as_int(number):
   return int(number[3])
-
   
 def answer_part_1(engine_schematic):
   def is_next_to_symbol(number, symbol_points):
@@ -89,7 +84,10 @@ def test_surrounding_points():
 def test_internal_points():
   assert set(internal_points((1,5,8,'114'))) == set([(1,5),(1,6),(1,7)])
 
-    
+####################################################################
+def read_engine_schematic(filename):
+ return [ line.strip() for line in open(filename,'r').readlines() ]
+
 ####################################################################
 def main():
   example = read_engine_schematic('./data/03_1e')
