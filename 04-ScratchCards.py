@@ -9,11 +9,12 @@ def score(matches):
 def answer_part_1(cards):
     return sum([score(matches(c['winners'], c['numbers'])) for c in cards])
 
-# assumes that card input is in order
 def answer_part_2(cards):
     card_counts_by_id = dict([(c['id'], 1) for c in cards])
-    id_matches = [(c['id'], matches(c['winners'], c['numbers'])) for c in cards]
-    for card_id, card_matches in id_matches:
+    card_id_matches = [(c['id'], matches(c['winners'], c['numbers'])) for c in cards]
+    # cycle through cards in id order (assumes that card input is in order)
+    for card_id, card_matches in card_id_matches:
+        # add "the count of current card ids" to next card ids (range limited to current card matches)
         for new_card_id in range(card_id + 1, card_id + 1 + card_matches):
             # add winnings to card counts
             card_counts_by_id[new_card_id] = card_counts_by_id[new_card_id] + card_counts_by_id[card_id]    
