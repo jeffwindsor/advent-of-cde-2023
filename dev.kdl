@@ -1,0 +1,27 @@
+// Python Development Layout
+layout {
+    pane {
+        split_direction "vertical"
+        pane {
+    		name "editor"
+    		focus true
+    		// open helix with current directory file picker
+    		command "hx" 
+            args "."
+    	}
+        pane {
+            pane {
+                name "tests" 
+            }
+            pane {
+                name "runner" 
+            }
+            pane {
+                name "repl" 
+                command "nix-shell"
+                args "--run" "python"
+            }            
+        }
+    }
+}
+
