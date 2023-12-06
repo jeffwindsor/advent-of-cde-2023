@@ -1,26 +1,29 @@
 // Python Development Layout
 layout {
+    pane_template name="nix" {
+        command "nix-shell"
+    }
     pane {
-        split_direction "vertical"
-        pane {
-    		name "editor"
-    		focus true
-    		// open helix with current directory file picker
-    		command "hx" 
-            args "."
-    	}
-        pane {
+        // TOP TAB BAR
+        // pane size=1 borderless=true {
+        //     plugin location="zellij:tab-bar"
+        // }
+        // Working Section
+        pane split_direction="vertical" {
+            nix {
+        		name "lsp"
+        		focus true
+                args  "shell_lsp.nix"
+        	}
             pane {
-                name "tests" 
+                nix name="test" 
+                nix name="run"
+                nix name="repl" 
             }
-            pane {
-                name "runner" 
-            }
-            pane {
-                name "repl" 
-                command "nix-shell"
-                args "--run" "python"
-            }            
+        }
+        // BOTTOM STATUS BAR
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
         }
     }
 }
