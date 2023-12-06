@@ -11,7 +11,8 @@ layout {
         // Working Section
         pane split_direction="vertical" {
             nix {
-        		name "lsp"
+                size "65%"
+        	    name "lsp"
         		focus true
                 args  "shell_lsp.nix"
         	}
